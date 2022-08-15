@@ -1,0 +1,24 @@
+{
+  "name": "encenv",
+  "version": "0.0.2",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": "./src/script.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "release:patch": "npm run clean && npm run build && npm version patch && npm publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.7.3",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "chalk": "^4.1.2",
+    "commander": "^9.4.0"
+  }
+}
