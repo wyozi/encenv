@@ -25,9 +25,9 @@ program.command('init')
   });
 
 program.command('set')
-  .description('Create an encrypted env file from scratch or from an existing .env')
-  .argument('<string>', 'key to set')
-  .argument('<string>', 'plaintext value')
+  .description('Set an encrypted variable')
+  .argument('<key>')
+  .argument('<value>')
   .action(async (key, value, options) => {
     const json = await load()
     json!.variables[key] = encryptValue(value, json!.publicKey!)
@@ -35,8 +35,8 @@ program.command('set')
   });
 
 program.command('dump')
-  .description('Create an encrypted env file from scratch or from an existing .env')
-  .argument('<string>', 'private key')
+  .description('Print variables')
+  .argument('<private-key>')
   .action(async (privateKey, options) => {
     const json = await load()
     for (const [key, val] of Object.entries(json!.variables)) {
