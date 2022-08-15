@@ -30,7 +30,7 @@ program.command('set')
   .argument('<string>', 'plaintext value')
   .action(async (key, value, options) => {
     const json = await load()
-    json!.variables[key] = await encryptValue(value, json!.publicKey!)
+    json!.variables[key] = encryptValue(value, json!.publicKey!)
     await save(json!)
   });
 
@@ -40,7 +40,7 @@ program.command('dump')
   .action(async (privateKey, options) => {
     const json = await load()
     for (const [key, val] of Object.entries(json!.variables)) {
-      console.log(key, '=', await decryptValue(val, privateKey))
+      console.log(key, '=', decryptValue(val, privateKey))
     }
   });
 
