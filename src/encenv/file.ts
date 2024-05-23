@@ -1,5 +1,5 @@
 import Ajv, { JSONSchemaType } from "ajv";
-import { readFileSync, promises as fsPromises } from 'fs'
+import { promises as fsPromises, readFileSync } from "fs";
 
 const ajv = new Ajv();
 
@@ -24,26 +24,28 @@ const schema: JSONSchemaType<EncryptedEnvJson> = {
 
 const validate = ajv.compile(schema);
 
-export async function load(): Promise<EncryptedEnvJson | null> {
-  const raw = await fsPromises.readFile('.encenv', 'utf-8')
-  const json = JSON.parse(raw)
+export async function load(
+  fileName = ".encenv"
+): Promise<EncryptedEnvJson | null> {
+  const raw = await fsPromises.readFile(fileName, "utf-8");
+  const json = JSON.parse(raw);
   if (validate(json)) {
-    return json
+    return json;
   } else {
-    throw validate.errors
+    throw validate.errors;
   }
 }
 
-export function loadSync(): EncryptedEnvJson | null {
-  const raw = readFileSync('.encenv', 'utf-8')
-  const json = JSON.parse(raw)
+export function loadSync(fileName = ".encenv"): EncryptedEnvJson | null {
+  const raw = readFileSync(fileName, "utf-8");
+  const json = JSON.parse(raw);
   if (validate(json)) {
-    return json
+    return json;
   } else {
-    throw validate.errors
+    throw validate.errors;
   }
 }
 
-export async function save(data: EncryptedEnvJson) {
-  await fsPromises.writeFile('.encenv', JSON.stringify(data, undefined, 2))
+export async function save(data: EncryptedEnvJson, fileName = ".encenv") {
+  await fsPromises.writeFile(fileName, JSON.stringify(data, undefined, 2));
 }
